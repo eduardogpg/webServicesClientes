@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firts Web Service </title>
+        <meta charset="UTF-8">
+       
+        <script type="text/javascript" src="Recursos/jquery-1.8.3.js"></script>
+        
+        <style type="text/css">
+
+            body{
+                background-color:  #8589D6;
+            }
+            h3{
+                color: #22160B;
+                text-align: center;
+                font-size: 28px;
+            }
+            #myFooter{
+                margin-top: 50px;
+                text-align: center;
+            }
+            .answers{
+                margin-top: =50px;
+                text-align: center;
+            }
+            .myForms{
+                text-align: center;
+                margin-left: 10px;
+                padding: 1em 2em;
+
+            }
+            .inputs{
+                width: 200px;
+                height: 20px;
+                border-radius: 5px;
+            }
+            .submitClass{
+                width: 150px;
+                height: 40px;
+                border-radius: 5px;
+            }
+            input{
+                text-align:center;
+            }
+            hr {
+                height: 2px;
+                width: 400px;
+                border: 0px solid #006666;
+                background-color: #006666;
+                color:#006666;
+            }
+            textarea{
+                width: 573px;
+                height: 167px;  
+            }
+            #exit{
+                color: #B03B4C;
+
+                cursor: pointer;
+            }
+
+        </style>
+</head>
+<body>
+    
+    <div id="first">
+ 
+        <h3>Firts Web Service</h3>
+    
+         <div id="formFirstWebService" class="myForms">
+                
+                <input type="text" class="inputs" id="nameFisrt" placeholder="your Name" name="name" required> <br> <br>
+                <input type="password" class="inputs" id="passFirst" placeholder="your password" name="password" required> <br> <br>
+               
+
+                <input type="button" value ="set conecction" class="submitClass" id="firstWeb" >
+   
+        </div>
+    </div>
+
+    <div id="answerFisrtWebService" class="answers">
+        <h4 id="answerFisrt"></h4>
+        <h5 id="exit">Genered a new Nouns</h5>
+    </div>
+
+
+
+
+    <div id="second">
+        <h3>Second Web Service</h3>
+         <div id="formSecondFirstWebService" class="myForms">
+                
+                <input type="text" class="inputs" id="nameSecond" placeholder="User" name="name" required> <br> <br>
+                <input type="text" class="inputs" id="nounsSecond" placeholder="Nouns" name="password" required> <br> <br>
+               
+
+                <input type="button" value ="set conecction" class="submitClass" id="secondWeb" >
+        </div>
+    </div>
+        
+
+
+
+
+    <div id="third">
+        <h3>Third Web Service </h3>
+
+        <div id="formThirdWebService" class="myForms">
+
+            <textarea style='width:80; height:120' id="code">  </textarea>    <br><br>
+            <input type="button" value ="set conecction" class="submitClass" id="thridWeb" >
+
+        </div>  
+    </div>
+
+
+
+
+    <hr>
+    
+    <footer id="myFooter">
+        <p>García Pérez Eduardo Ismael   113015</p>
+        <p>López Henández Yarib Octavio  113036</p>
+        <p>Vasquez Mancilla Luis Santiago  113360</p>
+        
+        <p> Catedratido :  Dr. Juan Carlos López Pimentel </p>
+        <img src="Recursos/Logo.png">
+        <p>Universidad Politecnica de Chiapas</p>
+        <p>Tuxta GTZ chiapas 10 de Julio 2014 </p>
+        
+
+    </footer>
+
+
+</body>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+        //Variables
+        var flagFirstWebService = false;
+        var flagSecondWebService = false;
+        var flagThirdWebService = false;
+
+        var answerFlagFirstWebService = false;
+        var answerFlagSecondWebService = false;
+        var answerFlagThirdWebService = false;
+
+        var user = "";
+        var nonce = "";
+        var password = "";
+        
+        var pathFirtsWebService = "http://localhost/webServicesClientes/firstWebService.php";
+        var pathSecondWebService = "http://localhost/webServicesClientes/secondWebService.php";
+        var pathThridWebService = "http://localhost/webServicesClientes/thirdWebService.php";
+
+        $("#second").css("display", "none");
+        $("#answerFisrtWebService").css("display", "none");
+        $("#third").css("display", "none");
+
+        $(document).keypress(function(e) {
+            if(e.which == 13) {
+                getValues();
+            }
+        });
+
+        $('#exit').click(function(){
+            restart();
+        });
+
+        $('#firstWeb').click(function(){
+            getValues();
+        });
+
+        $('#secondWeb').click(function(){
+            getValues();
+        });
+
+        $('#thridWeb').click(function(){
+
+            if ( ($('#code').val().length !=0 )  )
+                ajaxFunctionThridServer( $('#code').val(),pathThridWebService);
+        });
+
+
+        //Functions
+
+        function restart(){
+            
+            $("#second").css("display", "none");
+            $("#first").css("display", "none");
+            $("#third").css("display", "none");
+            $("#answerFisrtWebService").css("display", "none");
+
+            flagFirstWebService = false;
+            flagSecondWebService = false;
+            flagThirdWebService = false;
+
+            answerFlagFirstWebService = false;
+            answerFlagSecondWebService = false;
+            answerFlagThirdWebService = false;
+
+            user = "";
+
+            $("#first").slideToggle();
+
+
+
+        }
+
+        function getValues(){
+            if(flagFirstWebService== false){
+                flagFirstWebService = true;
+
+                if ( ($('#nameFisrt').val().length ==0 )  || ( $('#passFirst').val().length ==0 ) )
+                    alert("A problem was detected");    
+                else{
+                    user = $('#nameFisrt').val();
+                    ajaxFunction( $('#nameFisrt').val() , $('#passFirst').val() , pathFirtsWebService);
+                      
+                }
+                   
+
+            }else if( (flagFirstWebService==true) && (flagSecondWebService==false) ){
+                
+                if ( ($('#nameSecond').val().length ==0 )  || ( $('#nounsSecond').val().length ==0 ) )
+                    alert("A problem was detected");    
+                else
+                    ajaxFunction( $('#nameSecond').val() , $('#nounsSecond').val() , pathSecondWebService);
+
+            }else{
+
+            }
+        }
+
+        function ajaxFunction(valOne,valTwo,path){
+
+            $.ajax({
+                url:path,
+                type:"post",
+                data:{'valOne':valOne, 'ValTwo': valTwo},
+                timeout:1000,
+
+                success:function(answer){
+                    successFunction(answer);
+                },
+                error:function(jqXHR,status,error){
+                    alert(jqXHR)
+                },
+
+            });
+        }
+        
+        function ajaxFunctionThridServer(code, path){
+            
+            $.ajax({
+                url:path,
+                type:"post",
+                data:{'user':user,'nonce':nonce ,'code': code},
+                timeout:1000,
+                beforeSend: function(){
+                    //alert(user);
+                    //alert(nonce);
+                },
+
+                success:function(answer){
+                    alert(answer);
+                },
+                error:function(jqXHR,status,error){
+                    alert(jqXHR)
+                },
+
+            });
+        }
+
+
+
+        function successFunction(answer){
+
+            if(answerFlagFirstWebService == false) {
+                
+                
+                if(answer=='0'){
+                    alert(answer);
+                    restart();
+
+                }else{
+
+                    nonce = answer;
+
+                    $("#answerFisrt").html(answer);  
+                    $('#second').slideToggle();
+                    $('#third').slideToggle();
+                    $("#answerFisrtWebService").slideToggle();
+                    $("#first").css("display", "none");
+                    answerFlagFirstWebService = true;
+
+                }
+
+
+            }else if( (answerFlagFirstWebService== true) && (answerFlagSecondWebService==false) ){
+                alert(answer);
+
+            }
+
+
+        }
+         
+       
+    });
+  </script>
+</html>
