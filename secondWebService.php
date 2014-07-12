@@ -1,7 +1,7 @@
 <?php
     
     try {
-        $wsdl_url = 'http://192.168.0.113:8080/WSServer/WSServer2?WSDL';
+        $wsdl_url = 'http://192.168.1.101:8080/WSServer/WSServer2?WSDL';
         $client = new SOAPClient($wsdl_url);
 
 

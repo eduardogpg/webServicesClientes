@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Firts Web Service </title>
+    <title>Web Services </title>
         <meta charset="UTF-8">
        
         <script type="text/javascript" src="Recursos/jquery-1.8.3.js"></script>
@@ -9,7 +9,8 @@
         <style type="text/css">
 
             body{
-                background-color:  #8589D6;
+                background-color: #8CB5D9;
+
             }
             h3{
                 color: #22160B;
@@ -66,7 +67,7 @@
     
     <div id="first">
  
-        <h3>Firts Web Service</h3>
+        <h3>First Web Service</h3>
     
          <div id="formFirstWebService" class="myForms">
                 
@@ -81,7 +82,7 @@
 
     <div id="answerFisrtWebService" class="answers">
         <h4 id="answerFisrt"></h4>
-        <h5 id="exit">Genered a new Nouns</h5>
+        <h5 id="exit">New Nouns</h5>
     </div>
 
 
@@ -120,12 +121,15 @@
     <hr>
     
     <footer id="myFooter">
+        <h4>Ingenieria Desarrollo Software</h4>
         <p>García Pérez Eduardo Ismael   113015</p>
         <p>López Henández Yarib Octavio  113036</p>
-        <p>Vasquez Mancilla Luis Santiago  113360</p>
+        <p>Vazquez Mancilla Luis Santiago  113360</p>
         
         <p> Catedratido :  Dr. Juan Carlos López Pimentel </p>
         <img src="Recursos/Logo.png">
+
+
         <p>Universidad Politecnica de Chiapas</p>
         <p>Tuxta GTZ chiapas 10 de Julio 2014 </p>
         
@@ -151,6 +155,10 @@
         var nonce = "";
         var password = "";
         
+        var headerCode = "public class prueba{ public static void main(String args[]){ ";
+        var endCode = "}}";
+
+
         var pathFirtsWebService = "http://localhost/webServicesClientes/firstWebService.php";
         var pathSecondWebService = "http://localhost/webServicesClientes/secondWebService.php";
         var pathThridWebService = "http://localhost/webServicesClientes/thirdWebService.php";
@@ -228,7 +236,6 @@
                     alert("A problem was detected");    
                 else
                     ajaxFunction( $('#nameSecond').val() , $('#nounsSecond').val() , pathSecondWebService);
-
             }else{
 
             }
@@ -254,21 +261,23 @@
         
         function ajaxFunctionThridServer(code, path){
             
+            code = headerCode + code + endCode;
+            alert(code);
             $.ajax({
                 url:path,
                 type:"post",
                 data:{'user':user,'nonce':nonce ,'code': code},
-                timeout:1000,
+                timeout:10000,
                 beforeSend: function(){
-                    //alert(user);
-                    //alert(nonce);
                 },
 
                 success:function(answer){
                     alert(answer);
+                    console.log(answer);
                 },
                 error:function(jqXHR,status,error){
                     alert(jqXHR)
+                    console.log(error);
                 },
 
             });
